@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Екатерина Машкина](https://up.htmlacademy.ru/javascript-individual/2/user/2509131).
-* Наставник: `Неизвестно`.
+* Наставник: [Юрий Белобородов] (https://htmlacademy.ru/profile/id514591).
 
 ---
 
