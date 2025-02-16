@@ -6,7 +6,7 @@ function getRandomInteger (min, max) {
   return Math.floor(result);
 }
 
-function createIdGenerator () {
+function createNumberInOrder () {
   let lastGeneratedId = 0;
 
   return function () {
@@ -15,8 +15,7 @@ function createIdGenerator () {
   };
 }
 
-
-function createCommentId () {
+function createRandomUniqIntegerNumber () {
   const previousValues = [];
 
   return function () {
@@ -31,4 +30,4 @@ function createCommentId () {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-export {getRandomInteger, createIdGenerator, getRandomArrayElement, createCommentId};
+export {getRandomInteger, createNumberInOrder, getRandomArrayElement, createRandomUniqIntegerNumber};

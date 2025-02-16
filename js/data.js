@@ -1,4 +1,4 @@
-import {getRandomInteger, createIdGenerator, getRandomArrayElement, createCommentId} from './util.js';
+import {getRandomInteger, createNumberInOrder, getRandomArrayElement, createRandomUniqIntegerNumber} from './util.js';
 
 const DESCRIPTIONS = [
   'красивый закат',
@@ -7,7 +7,7 @@ const DESCRIPTIONS = [
   'еда как искусство',
   'новые места, новые истории',
   'дорога зовёт',
-  'ещё один город, ещё одно приключение'
+  'ещё один город, ещё одно приключение',
 ];
 
 const MESSAGES = [
@@ -16,7 +16,7 @@ const MESSAGES = [
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
 const COMMENTATOR_NAMES = [
@@ -30,28 +30,26 @@ const COMMENTATOR_NAMES = [
   'Василий',
 ];
 
-const LIKES_NUMBER = {
-  MIN: 15,
-  MAX: 200
+const SETTINGS = {
+  'LIKES NUMBER MIN': 15,
+  'LIKES NUMBER MAX': 200,
+  'COMMENTS NUMBER MIN': 0,
+  'COMMENTS NUMBER MAX': 30,
+  'AVATAR ID NUMBER MIN': 1,
+  'AVATAR ID NUMBER MAX': 6,
+  'PHOTOS NUMBER': 25,
 };
 
-const COMMENTS_NUMBER = {
-  MIN: 0,
-  MAX: 30
-};
+const getPhotoId = createNumberInOrder();
 
-const PHOTOS_NUMBER = 25;
+const getUrlNumber = createNumberInOrder();
 
-const getPhotoId = createIdGenerator();
-
-const getUrlNumber = createIdGenerator();
-
-const getCommentId = createCommentId();
+const getCommentId = createRandomUniqIntegerNumber();
 
 function getComment () {
   return {
     CommentId: getCommentId(),
-    avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
+    avatar: `img/avatar-${ getRandomInteger(SETTINGS['AVATAR ID NUMBER MIN'], SETTINGS['AVATAR ID NUMBER MAX']) }.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(COMMENTATOR_NAMES)
   };
@@ -62,11 +60,11 @@ function getPhotoDescription () {
     id: getPhotoId(),
     url: `photos/${ getUrlNumber() }.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInteger(LIKES_NUMBER.MIN, LIKES_NUMBER.MAX),
-    comments: Array.from({length: getRandomInteger(COMMENTS_NUMBER.MIN, COMMENTS_NUMBER.MAX)}, getComment)
+    likes: getRandomInteger(SETTINGS['LIKES NUMBER MIN'], SETTINGS['LIKES NUMBER MAX']),
+    comments: Array.from({length: getRandomInteger(SETTINGS['COMMENTS NUMBER MIN'], SETTINGS['COMMENTS NUMBER MAX'])}, getComment)
   };
 }
 
-const createMockPhotos = () => Array.from({length: PHOTOS_NUMBER}, getPhotoDescription);
+const createMockPhotos = () => Array.from({length: SETTINGS['PHOTOS NUMBER']}, getPhotoDescription);
 
 export {createMockPhotos};
