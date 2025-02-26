@@ -1,4 +1,4 @@
-import {getRandomInteger, createNumberInOrder, getRandomArrayElement, createRandomUniqIntegerNumber} from './util.js';
+import {getRandomInteger, getNumberInOrder, getRandomArrayElement, getRandomUniqIntegerNumber} from './util.js';
 
 const DESCRIPTIONS = [
   'красивый закат',
@@ -40,11 +40,11 @@ const SETTINGS = {
   'PHOTOS NUMBER': 25,
 };
 
-const getPhotoId = createNumberInOrder();
+const getPhotoId = getNumberInOrder();
 
-const getUrlNumber = createNumberInOrder();
+const getUrlNumber = getNumberInOrder();
 
-const getCommentId = createRandomUniqIntegerNumber();
+const getCommentId = getRandomUniqIntegerNumber();
 
 function getComment () {
   return {
