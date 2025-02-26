@@ -15,7 +15,7 @@ mockPhotos.forEach(({url, description, likes, comments}) => {
   const pictureLikes = picture.querySelector('.picture__likes');
 
   pictureImg.src = url;
-  pictureImg.textContent = description;
+  pictureImg.alt = description;
   pictureComments.textContent = comments.length;
   pictureLikes.textContent = likes;
 
