@@ -67,6 +67,4 @@ function getPhotoDescription () {
 
 const createMockPhotos = () => Array.from({length: SETTINGS['PHOTOS NUMBER']}, getPhotoDescription);
 
-const mockPhotos = createMockPhotos();
-
-export {mockPhotos};
+export const mockPhotos = createMockPhotos();

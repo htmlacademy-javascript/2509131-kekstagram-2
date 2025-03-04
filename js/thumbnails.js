@@ -28,8 +28,6 @@ function fillDocumentFragment (photos) {
 
 function renderPhotoCards (container, photosArray) {
   container.append(fillDocumentFragment(photosArray));
-
-  return container;
 }
 
 renderPhotoCards(picturesContainer, mockPhotos);
