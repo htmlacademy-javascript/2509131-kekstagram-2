@@ -14,6 +14,7 @@ function fillPictureTemplate (picture) {
   thumbnailImg.alt = picture.description;
   thumbnailComments.textContent = picture.comments.length;
   pictureLikes.textContent = picture.likes;
+  thumbnail.dataset.pictureId = picture.id;
 
   return thumbnail;
 }
@@ -31,4 +32,6 @@ function renderPhotoCards (container, photosArray) {
 }
 
 renderPhotoCards(picturesContainer, mockPhotos);
+
+export {picturesContainer};
 

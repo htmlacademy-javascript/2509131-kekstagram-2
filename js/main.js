@@ -1,3 +1,2 @@
 import './thumbnails.js';
-import {mockPhotos} from './data.js';
-
+import './galery.js';
