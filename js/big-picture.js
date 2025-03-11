@@ -1,17 +1,23 @@
 import { mockPhotos } from './data.js';
-console.log(mockPhotos);
+import {isEscapeKey} from './util.js';
+import {addComments, clearComments} from './comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
 const likesCount = bigPicture.querySelector('.likes-count');
-const photoDescription = bigPicture.querySelector('.social__caption');
+const socialCaption = bigPicture.querySelector('.social__caption');
 const socialCommentCount = bigPicture.querySelector('.social__comment-count');
 const socialCommentTotalCount = bigPicture.querySelector('.social__comment-total-count');
-const socialComments = bigPicture.querySelector('.social__comments');
-const socialCommentTemplate = socialComments.querySelector('.social__comment');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const body = document.querySelector('body');
+const closeButton = bigPicture.querySelector('.big-picture__cancel');
 
+const onDocumentEscKeydown = (evt) => {
+  if(isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
 
 export function openBigPicture (pictureId) {
   const currentPhoto = mockPhotos.find((photo) =>
@@ -19,24 +25,25 @@ export function openBigPicture (pictureId) {
   );
   bigPictureImg.src = currentPhoto.url;
   likesCount.textContent = currentPhoto.likes;
-  //по заданию надо вставить строкой
-  photoDescription.textContent = currentPhoto.description;
+  socialCaption.textContent = currentPhoto.description;
   socialCommentTotalCount.textContent = currentPhoto.comments.length;
 
-  currentPhoto.comments.forEach((comment) => {
-    const socialComment = socialCommentTemplate.cloneNode(true);
-    const socialCommentPicture = socialComment.querySelector('.social__picture');
-    const socialCommentText = socialComment.querySelector('.social__text');
-    socialCommentPicture.src = comment.avatar;
-    socialCommentPicture.alt = comment.name;
-    socialCommentText.textContent = comment.message;
-    socialComments.append(socialComment);
-  });
+  addComments(currentPhoto);
 
   bigPicture.classList.remove('hidden');
   socialCommentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onDocumentEscKeydown);
+  closeButton.addEventListener('click', closeBigPicture);
 }
 
-//const o
+function closeBigPicture () {
+  bigPicture.classList.add('hidden');
+  clearComments();
+  document.removeEventListener('keydown', onDocumentEscKeydown);
+  closeButton.removeEventListener('click', closeBigPicture);
+}
+
+
