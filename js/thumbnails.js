@@ -1,7 +1,4 @@
-import {mockPhotos} from './data.js';
-
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
-const picturesContainer = document.querySelector('.pictures');
 const documentFragment = document.createDocumentFragment();
 
 function fillPictureTemplate (picture) {
@@ -27,11 +24,6 @@ function fillDocumentFragment (photos) {
   return documentFragment;
 }
 
-function renderPhotoCards (container, photosArray) {
+export function renderPhotoCards (container, photosArray) {
   container.append(fillDocumentFragment(photosArray));
 }
-
-renderPhotoCards(picturesContainer, mockPhotos);
-
-export {picturesContainer};
-
