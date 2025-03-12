@@ -30,7 +30,7 @@ const COMMENTATOR_NAMES = [
   'Василий',
 ];
 
-const SETTINGS = {
+const settings = {
   'LIKES NUMBER MIN': 15,
   'LIKES NUMBER MAX': 200,
   'COMMENTS NUMBER MIN': 0,
@@ -49,7 +49,7 @@ const getCommentId = getRandomUniqIntegerNumber();
 function getComment () {
   return {
     CommentId: getCommentId(),
-    avatar: `img/avatar-${ getRandomInteger(SETTINGS['AVATAR ID NUMBER MIN'], SETTINGS['AVATAR ID NUMBER MAX']) }.svg`,
+    avatar: `img/avatar-${ getRandomInteger(settings['AVATAR ID NUMBER MIN'], settings['AVATAR ID NUMBER MAX']) }.svg`,
     message: getRandomArrayElement(MESSAGES),
     name: getRandomArrayElement(COMMENTATOR_NAMES)
   };
@@ -60,13 +60,11 @@ function getPhotoDescription () {
     id: getPhotoId(),
     url: `photos/${ getUrlNumber() }.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInteger(SETTINGS['LIKES NUMBER MIN'], SETTINGS['LIKES NUMBER MAX']),
-    comments: Array.from({length: getRandomInteger(SETTINGS['COMMENTS NUMBER MIN'], SETTINGS['COMMENTS NUMBER MAX'])}, getComment)
+    likes: getRandomInteger(settings['LIKES NUMBER MIN'], settings['LIKES NUMBER MAX']),
+    comments: Array.from({length: getRandomInteger(settings['COMMENTS NUMBER MIN'], settings['COMMENTS NUMBER MAX'])}, getComment)
   };
 }
 
-const createMockPhotos = () => Array.from({length: SETTINGS['PHOTOS NUMBER']}, getPhotoDescription);
+const createMockPhotos = () => Array.from({length: settings['PHOTOS NUMBER']}, getPhotoDescription);
 
-const mockPhotos = createMockPhotos();
-
-export {mockPhotos};
+export const mockPhotos = createMockPhotos();
