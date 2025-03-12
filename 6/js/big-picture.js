@@ -23,6 +23,12 @@ export function openBigPicture (pictureId) {
   const currentPhoto = mockPhotos.find((photo) =>
     photo.id === Number(pictureId)
   );
+
+  if (!currentPhoto) {
+    console.error(`Photo with id ${pictureId} not found.`);
+    return;
+  }
+
   bigPictureImg.src = currentPhoto.url;
   likesCount.textContent = currentPhoto.likes;
   socialCaption.textContent = currentPhoto.description;
