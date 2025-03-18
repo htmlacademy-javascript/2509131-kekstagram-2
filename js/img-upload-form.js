@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util';
+import { isEscapeKey } from './util.js';
 
 const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
@@ -24,18 +24,21 @@ function onDocumentEscKeydown (evt) {
   closeUploadForm();
 }
 
+function onimgUploadCancelButtonClick () {
+  closeUploadForm();
+}
 
-function openUploadForm () {
+function onImgUploadInputChange () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  imgUploadCancelButton.addEventListener('click', closeUploadForm);
+  imgUploadCancelButton.addEventListener('click', onimgUploadCancelButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
 }
 
 function closeUploadForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  imgUploadCancelButton.removeEventListener('click', closeUploadForm);
+  imgUploadCancelButton.removeEventListener('click', onimgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
   imgUploadInput.value = '';
 }
@@ -112,7 +115,7 @@ function onImgUploadFormSubmit (evt) {
   imgUploadForm.submit();
 }
 
-imgUploadInput.addEventListener('change', openUploadForm);
+imgUploadInput.addEventListener('change', onImgUploadInputChange);
 
 pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
 
