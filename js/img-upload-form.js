@@ -8,19 +8,22 @@ const body = document.querySelector('body');
 const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cancel');
 const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
+const MAX_TEXT_DESCRIPTION_LENGTH = 100;
 let errorMessage = '';
 
 function onDocumentEscKeydown (evt) {
-  if(isEscapeKey(evt)) {
-    evt.preventDefault();
-    if(document.activeElement === textHashtags
-      || document.activeElement === textDescription) {
-      evt.stopPropagation();
-    } else {
-      closeUploadForm();
-    }
+  if(!isEscapeKey(evt)) {
+    return;
   }
+  evt.preventDefault();
+  const INPUT_FIELDS = [textHashtags, textDescription];
+  if(INPUT_FIELDS.includes(document.activeElement)) {
+    evt.stopPropagation();
+    return;
+  }
+  closeUploadForm();
 }
+
 
 function openUploadForm () {
   imgUploadOverlay.classList.remove('hidden');
@@ -45,7 +48,7 @@ const pristine = new Pristine(imgUploadForm, {
 });
 
 function validateTextDescription () {
-  return textDescription.value.length <= 140;
+  return textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
 }
 
 const getErrorMessage = () => errorMessage;
@@ -99,15 +102,20 @@ function validateHashtags () {
   });
 }
 
+function onImgUploadFormSubmit (evt) {
+  evt.preventDefault();
+
+  if(!pristine.validate()) {
+    return;
+  }
+
+  imgUploadForm.submit();
+}
+
 imgUploadInput.addEventListener('change', openUploadForm);
 
 pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
 
-pristine.addValidator(textDescription, validateTextDescription, 'длина комментария не может быть больше 140 символов');
+pristine.addValidator(textDescription, validateTextDescription, `длина комментария не может быть больше ${MAX_TEXT_DESCRIPTION_LENGTH} символов`);
 
-imgUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    imgUploadForm.submit();
-  }
-});
+imgUploadForm.addEventListener('submit', onImgUploadFormSubmit);
