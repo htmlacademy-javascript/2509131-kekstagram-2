@@ -8,7 +8,7 @@ const body = document.querySelector('body');
 const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cancel');
 const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
-const MAX_TEXT_DESCRIPTION_LENGTH = 100;
+const MAX_TEXT_DESCRIPTION_LENGTH = 140;
 let errorMessage = '';
 
 function onDocumentEscKeydown (evt) {
