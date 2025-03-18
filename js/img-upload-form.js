@@ -10,20 +10,23 @@ const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 let errorMessage = '';
 
-imgUploadInput.addEventListener('change', openUploadForm);
-imgUploadCancelButton.addEventListener('click', closeUploadForm);
-document.addEventListener('keydown', onDocumentEscKeydown);
-
 function onDocumentEscKeydown (evt) {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
-    closeUploadForm();
+    if(document.activeElement === textHashtags
+      || document.activeElement === textDescription) {
+      evt.stopPropagation();
+    } else {
+      closeUploadForm();
+    }
   }
 }
 
 function openUploadForm () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
+  imgUploadCancelButton.addEventListener('click', closeUploadForm);
+  document.addEventListener('keydown', onDocumentEscKeydown);
 }
 
 function closeUploadForm () {
@@ -36,7 +39,6 @@ function closeUploadForm () {
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
-  //errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
   errorTextClass: 'img-upload__field-wrapper--error'
@@ -79,8 +81,8 @@ function validateHashtags () {
       errorMessage: 'Хэштэг содержит недопустимые символы'
     },
     {
-      check: hashtags.some((item, num, array) => array.includes(item, num + 1)),
-      errorMessage: 'Хэштэги должны разделяться пробелами'
+      check: hashtags.some((item, index, array) => array.includes(item, index + 1)),
+      errorMessage: 'Хэштэги не могут повторяться'
     },
   ];
 
@@ -96,6 +98,8 @@ function validateHashtags () {
     return !isInvalid;
   });
 }
+
+imgUploadInput.addEventListener('change', openUploadForm);
 
 pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
 
