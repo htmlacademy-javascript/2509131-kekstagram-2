@@ -32,13 +32,3 @@ export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, 
 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export const pickNumbers = (string) => {
-  let result = '';
-  for (let i = 0; i <= string.length - 1; i++) {
-    const number = parseInt(string[i], 10);
-    if (Number.isNaN(number) === false) {
-      result += number;
-    }
-  }
-  return result;
-};
