@@ -68,6 +68,7 @@ function onImgUploadFormSubmit (evt) {
   if(!pristine.validate()) {
     return;
   }
+  textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
   imgUploadForm.submit();
 }
 
