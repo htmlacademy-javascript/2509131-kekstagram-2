@@ -1,5 +1,3 @@
-//import { imgUploadPreview } from './effects-slider.js';
-
 const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview').querySelector('img');
 const scaleControlValue = imgUploadSection.querySelector('.scale__control--value');

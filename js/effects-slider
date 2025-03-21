@@ -42,13 +42,12 @@ for (const effect of effects) {
   effect.addEventListener('change', () => {
     sliderContainer.classList.remove('hidden');
     effectSlider.classList.remove('hidden');
-    // effectLevel.value = effectSliderElement.range.max.value;
-    // console.log(effectLevel.value);
 
     if (originalEffect.checked) {
       sliderContainer.classList.add('hidden');
       effectSlider.classList.add('hidden');
-      // добавить нет эффекта в стили
+      effectLevel.value = 0;
+      imgUploadPreview.style.filter = 'none';
     } else if (chromeEffect.checked) {
       effectSlider.noUiSlider.on('update', () => {
         effectLevel.value = effectSlider.noUiSlider.get();
