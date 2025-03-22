@@ -1,6 +1,6 @@
 
 const imgUploadSection = document.querySelector('.img-upload');
-const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview').querySelector('img');
+const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
 const effectSlider = imgUploadSection.querySelector('.effect-level__slider');
 const effectLevel = imgUploadSection.querySelector('.effect-level__value');
 const effects = imgUploadSection.querySelectorAll('.effects__radio');

@@ -1,6 +1,5 @@
 import { isEscapeKey } from './util.js';
 import { validateHashtags, getErrorMessage } from './validate-hashtags.js';
-import { onScaleControlSmallerClick, onScaleControllBiggerClick } from './on-scale-controlls-click.js';
 
 export const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
@@ -11,8 +10,6 @@ const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cance
 export const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const MAX_TEXT_DESCRIPTION_LENGTH = 140;
-const scaleControlSmaller = imgUploadSection.querySelector('.scale__control--smaller');
-const scaleControlBigger = imgUploadSection.querySelector('.scale__control--bigger');
 
 function onDocumentEscKeydown (evt) {
   if(!isEscapeKey(evt)) {
@@ -36,8 +33,6 @@ function onImgUploadInputChange () {
   body.classList.add('modal-open');
   imgUploadCancelButton.addEventListener('click', onimgUploadCancelButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
-  scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
-  scaleControlBigger.addEventListener('click', onScaleControllBiggerClick);
   imgUploadForm.addEventListener('submit', onImgUploadFormSubmit);
 }
 
@@ -46,8 +41,6 @@ function closeUploadForm () {
   body.classList.remove('modal-open');
   imgUploadCancelButton.removeEventListener('click', onimgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
-  scaleControlBigger.removeEventListener('click', onScaleControllBiggerClick);
   imgUploadForm.removeEventListener('submit', onImgUploadFormSubmit);
   imgUploadInput.value = '';
 }
