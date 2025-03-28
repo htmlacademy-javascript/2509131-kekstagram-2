@@ -1,4 +1,3 @@
-import { mockPhotos } from './data.js';
 import {isEscapeKey} from './util.js';
 import {addComments, clearComments} from './comments.js';
 
@@ -7,8 +6,13 @@ const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelecto
 const likesCount = bigPicture.querySelector('.likes-count');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const socialCommentTotalCount = document.querySelector('.social__comment-total-count');
-const body = document.querySelector('body');
+export const body = document.querySelector('body');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
+let pictures = [];
+
+export const fillPictures = (photos) => {
+  pictures = photos;
+};
 
 const onDocumentEscKeydown = (evt) => {
   if(isEscapeKey(evt)) {
@@ -18,7 +22,7 @@ const onDocumentEscKeydown = (evt) => {
 };
 
 export function openBigPicture (pictureId) {
-  const currentPhoto = mockPhotos.find((photo) =>
+  const currentPhoto = pictures.find((photo) =>
     photo.id === Number(pictureId)
   );
 

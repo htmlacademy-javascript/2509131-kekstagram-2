@@ -1,5 +1,6 @@
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 const documentFragment = document.createDocumentFragment();
+export const picturesContainer = document.querySelector('.pictures');
 
 function fillPictureTemplate (picture) {
   const thumbnail = templatePicture.cloneNode(true);
@@ -24,6 +25,6 @@ function fillDocumentFragment (photos) {
   return documentFragment;
 }
 
-export function renderPhotoCards (container, photosArray) {
-  container.append(fillDocumentFragment(photosArray));
+export function renderPhotoCards (photosArray) {
+  picturesContainer.append(fillDocumentFragment(photosArray));
 }

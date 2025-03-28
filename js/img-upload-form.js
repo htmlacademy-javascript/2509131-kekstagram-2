@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { validateHashtags, getErrorMessage } from './validate-hashtags.js';
+import { showUploadingDataError } from './errors.js';
+import { sendData } from './api.js';
 
 export const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
@@ -33,7 +35,6 @@ function onImgUploadInputChange () {
   body.classList.add('modal-open');
   imgUploadCancelButton.addEventListener('click', onimgUploadCancelButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
-  imgUploadForm.addEventListener('submit', onImgUploadFormSubmit);
 }
 
 function closeUploadForm () {
@@ -41,7 +42,6 @@ function closeUploadForm () {
   body.classList.remove('modal-open');
   imgUploadCancelButton.removeEventListener('click', onimgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  imgUploadForm.removeEventListener('submit', onImgUploadFormSubmit);
   imgUploadInput.value = '';
 }
 
@@ -56,14 +56,23 @@ function validateTextDescription () {
   return textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
 }
 
-function onImgUploadFormSubmit (evt) {
-  evt.preventDefault();
-  if(!pristine.validate()) {
-    return;
-  }
-  textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
-  imgUploadForm.submit();
-}
+const setImgUploadFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if(!pristine.validate()) {
+      return;
+    }
+    textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
+
+    sendData(new FormData(evt.target))
+      .then(onSuccess)
+      .catch(() => {
+        showUploadingDataError();
+      });
+  });
+};
+
+setImgUploadFormSubmit(closeUploadForm);
 
 imgUploadInput.addEventListener('change', onImgUploadInputChange);
 
