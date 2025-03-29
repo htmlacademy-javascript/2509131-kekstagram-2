@@ -2,6 +2,9 @@ import { isEscapeKey } from './util.js';
 import { validateHashtags, getErrorMessage } from './validate-hashtags.js';
 import { showUploadingDataError } from './errors.js';
 import { sendData } from './api.js';
+import { resetScale } from './scale-controlls.js';
+import { resetFilter } from './effects-slider.js';
+import { showSuccessMessage } from './success-message.js';
 
 export const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
@@ -12,6 +15,12 @@ const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cance
 export const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const MAX_TEXT_DESCRIPTION_LENGTH = 140;
+
+function resetFormFields () {
+  imgUploadInput.value = '';
+  textDescription.value = '';
+  textHashtags.value = '';
+}
 
 function onDocumentEscKeydown (evt) {
   if(!isEscapeKey(evt)) {
@@ -42,7 +51,9 @@ function closeUploadForm () {
   body.classList.remove('modal-open');
   imgUploadCancelButton.removeEventListener('click', onimgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  imgUploadInput.value = '';
+  resetFormFields();
+  resetScale();
+  resetFilter();
 }
 
 const pristine = new Pristine(imgUploadForm, {
@@ -69,6 +80,8 @@ const setImgUploadFormSubmit = (onSuccess) => {
       .catch(() => {
         showUploadingDataError();
       });
+
+    showSuccessMessage();
   });
 };
 

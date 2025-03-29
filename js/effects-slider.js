@@ -5,6 +5,7 @@ const effectSlider = imgUploadSection.querySelector('.effect-level__slider');
 const effectLevel = imgUploadSection.querySelector('.effect-level__value');
 const effectsList = imgUploadSection.querySelector('.effects__list');
 const sliderContainer = imgUploadSection.querySelector('.img-upload__effect-level');
+const originalFilter = imgUploadSection.querySelector('#effect-none');
 
 const EFFECT_SETTINGS = {
   none: {
@@ -80,14 +81,19 @@ noUiSlider.create(effectSlider, {
 
 sliderContainer.classList.add('hidden');
 
+export function resetFilter () {
+  sliderContainer.classList.add('hidden');
+  imgUploadPreview.style.filter = 'none';
+  effectLevel.value = 0;
+  originalFilter.checked = true;
+}
+
 function onEffectsListChange (evt) {
   const effect = evt.target.value;
   const filterSettings = EFFECT_SETTINGS[effect];
 
   if(effect === 'none') {
-    sliderContainer.classList.add('hidden');
-    imgUploadPreview.style.filter = 'none';
-    effectLevel.value = 0;
+    resetFilter();
   } else {
     sliderContainer.classList.remove('hidden');
 

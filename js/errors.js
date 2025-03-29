@@ -1,10 +1,10 @@
 import { isEscapeKey } from './util.js';
 
-const REMOVE_ERROR_MESSAGE_TIME = 5000;
 const dataError = document.querySelector('#data-error').content.querySelector('.data-error');
 const uploadingError = document.querySelector('#error').content.querySelector('.error');
 const errorButton = uploadingError.querySelector('.error__button');
 export const errorInner = uploadingError.querySelector('.error__inner');
+const REMOVE_ERROR_MESSAGE_TIME = 5000;
 
 export const showLoadingDataError = () => {
   document.body.append(dataError);
