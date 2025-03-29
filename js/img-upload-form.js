@@ -1,5 +1,10 @@
 import { isEscapeKey } from './util.js';
 import { validateHashtags, getErrorMessage } from './validate-hashtags.js';
+import { showUploadingDataError } from './errors.js';
+import { sendData } from './api.js';
+import { resetScale } from './scale-controlls.js';
+import { resetFilter } from './effects-slider.js';
+import { showSuccessMessage } from './success-message.js';
 
 export const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
@@ -10,6 +15,12 @@ const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cance
 export const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const MAX_TEXT_DESCRIPTION_LENGTH = 140;
+
+function resetFormFields () {
+  imgUploadInput.value = '';
+  textDescription.value = '';
+  textHashtags.value = '';
+}
 
 function onDocumentEscKeydown (evt) {
   if(!isEscapeKey(evt)) {
@@ -33,7 +44,6 @@ function onImgUploadInputChange () {
   body.classList.add('modal-open');
   imgUploadCancelButton.addEventListener('click', onimgUploadCancelButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
-  imgUploadForm.addEventListener('submit', onImgUploadFormSubmit);
 }
 
 function closeUploadForm () {
@@ -41,8 +51,9 @@ function closeUploadForm () {
   body.classList.remove('modal-open');
   imgUploadCancelButton.removeEventListener('click', onimgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  imgUploadForm.removeEventListener('submit', onImgUploadFormSubmit);
-  imgUploadInput.value = '';
+  resetFormFields();
+  resetScale();
+  resetFilter();
 }
 
 const pristine = new Pristine(imgUploadForm, {
@@ -56,14 +67,25 @@ function validateTextDescription () {
   return textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
 }
 
-function onImgUploadFormSubmit (evt) {
-  evt.preventDefault();
-  if(!pristine.validate()) {
-    return;
-  }
-  textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
-  imgUploadForm.submit();
-}
+const setImgUploadFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if(!pristine.validate()) {
+      return;
+    }
+    textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
+
+    sendData(new FormData(evt.target))
+      .then(onSuccess)
+      .catch(() => {
+        showUploadingDataError();
+      });
+
+    showSuccessMessage();
+  });
+};
+
+setImgUploadFormSubmit(closeUploadForm);
 
 imgUploadInput.addEventListener('change', onImgUploadInputChange);
 
