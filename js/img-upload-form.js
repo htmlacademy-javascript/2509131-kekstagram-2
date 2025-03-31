@@ -5,7 +5,6 @@ import { sendData } from './api.js';
 import { resetScale } from './scale-controlls.js';
 import { resetFilter } from './effects-slider.js';
 import { showSuccessMessage } from './success-message.js';
-
 export const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
 const imgUploadInput = imgUploadSection.querySelector('.img-upload__input');
@@ -14,6 +13,7 @@ const body = document.querySelector('body');
 const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cancel');
 export const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
+const submitButton = imgUploadSection.querySelector('.img-upload__submit');
 const MAX_TEXT_DESCRIPTION_LENGTH = 140;
 
 function resetFormFields () {
@@ -67,6 +67,14 @@ function validateTextDescription () {
   return textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
 }
 
+function blockSubmitButton () {
+  submitButton.disabled = true;
+}
+
+function unblockSubmitButton () {
+  submitButton.disabled = false;
+}
+
 const setImgUploadFormSubmit = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -75,13 +83,15 @@ const setImgUploadFormSubmit = (onSuccess) => {
     }
     textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
 
+    blockSubmitButton();
+
     sendData(new FormData(evt.target))
       .then(onSuccess)
+      .then(showSuccessMessage)
       .catch(() => {
         showUploadingDataError();
-      });
-
-    showSuccessMessage();
+      })
+      .finally(unblockSubmitButton);
   });
 };
 
