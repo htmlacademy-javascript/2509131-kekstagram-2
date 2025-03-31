@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { body } from './big-picture.js';
 
 const dataError = document.querySelector('#data-error').content.querySelector('.data-error');
 const uploadingError = document.querySelector('#error').content.querySelector('.error');
@@ -15,21 +16,25 @@ export const showLoadingDataError = () => {
 
 function removeUploadingErrorMessage () {
   uploadingError.remove();
+  errorButton.removeEventListener('click', onErrorButtonClick);
+  body.removeEventListener('keydown', onBodyEscKeydown);
+  body.removeEventListener('click', onBodyClick);
 }
 
 function onErrorButtonClick () {
   removeUploadingErrorMessage();
 }
 
-function onDocumentEscKeydown (evt) {
+function onBodyEscKeydown (evt) {
   if(!isEscapeKey(evt)) {
     return;
   }
   evt.preventDefault();
+  evt.stopPropagation();
   removeUploadingErrorMessage();
 }
 
-function onDocumentClick (evt) {
+function onBodyClick (evt) {
   if(evt.target === errorInner) {
     return;
   }
@@ -39,6 +44,6 @@ function onDocumentClick (evt) {
 export const showUploadingDataError = () => {
   document.body.append(uploadingError);
   errorButton.addEventListener('click', onErrorButtonClick);
-  document.addEventListener('keydown', onDocumentEscKeydown);
-  document.addEventListener('click', onDocumentClick);
+  body.addEventListener('keydown', onBodyEscKeydown);
+  body.addEventListener('click', onBodyClick);
 };

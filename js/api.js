@@ -19,7 +19,7 @@ const load = (route, showError, method = Method.GET, body = null) =>
       return response.json();
     })
     .catch(() => {
-      showError();
+      throw new Error(showError());
     });
 
 export const getData = () => load(Route.GET_DATA, showLoadingDataError);

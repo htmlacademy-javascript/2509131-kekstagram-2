@@ -10,6 +10,8 @@ const MAX_SCALE = 100;
 export function resetScale () {
   scaleControlValue.value = '100%';
   imgUploadPreview.style.transform = 'none';
+  scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.removeEventListener('click', onScaleControllBiggerClick);
 }
 
 function changeScale (value) {
