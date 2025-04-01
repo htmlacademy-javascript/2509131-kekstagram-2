@@ -7,6 +7,13 @@ const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 
+export function resetScale () {
+  scaleControlValue.value = '100%';
+  imgUploadPreview.style.transform = 'none';
+  scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.removeEventListener('click', onScaleControllBiggerClick);
+}
+
 function changeScale (value) {
   scaleControlValue.value = `${value}%`;
   imgUploadPreview.style.transform = `scale(${ value / 100})`;
