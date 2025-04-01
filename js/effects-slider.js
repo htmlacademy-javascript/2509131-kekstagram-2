@@ -1,4 +1,3 @@
-
 const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
 const effectSlider = imgUploadSection.querySelector('.effect-level__slider');

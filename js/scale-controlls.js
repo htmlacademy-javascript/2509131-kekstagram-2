@@ -1,6 +1,6 @@
 const imgUploadSection = document.querySelector('.img-upload');
-export const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
-export const scaleControlValue = imgUploadSection.querySelector('.scale__control--value');
+const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
+const scaleControlValue = imgUploadSection.querySelector('.scale__control--value');
 const scaleControlSmaller = imgUploadSection.querySelector('.scale__control--smaller');
 const scaleControlBigger = imgUploadSection.querySelector('.scale__control--bigger');
 const SCALE_STEP = 25;

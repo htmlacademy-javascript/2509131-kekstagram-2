@@ -1,8 +1,9 @@
-import {renderPhotoCards} from './thumbnails.js';
-import {fillPictures, openBigPicture} from './big-picture.js';
-import { picturesContainer } from './thumbnails.js';
+import { renderPhotoCards } from './thumbnails.js';
+import { fillPictures, openBigPicture } from './big-picture.js';
 import { showLoadingDataError } from './errors.js';
 import { getData } from './api.js';
+
+const picturesContainer = document.querySelector('.pictures');
 
 getData()
   .then((photos) => {

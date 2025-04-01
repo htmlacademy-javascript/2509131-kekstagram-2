@@ -5,13 +5,14 @@ import { sendData } from './api.js';
 import { resetScale } from './scale-controlls.js';
 import { resetFilter } from './effects-slider.js';
 import { showSuccessMessage } from './success-message.js';
-export const imgUploadSection = document.querySelector('.img-upload');
+
+const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
 const imgUploadInput = imgUploadSection.querySelector('.img-upload__input');
 const imgUploadOverlay = imgUploadSection.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cancel');
-export const textHashtags = imgUploadSection.querySelector('.text__hashtags');
+const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const submitButton = imgUploadSection.querySelector('.img-upload__submit');
 const MAX_TEXT_DESCRIPTION_LENGTH = 140;

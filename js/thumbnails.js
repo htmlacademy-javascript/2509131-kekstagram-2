@@ -1,6 +1,6 @@
 const templatePicture = document.querySelector('#picture').content.querySelector('.picture');
 const documentFragment = document.createDocumentFragment();
-export const picturesContainer = document.querySelector('.pictures');
+const picturesContainer = document.querySelector('.pictures');
 
 function fillPictureTemplate (picture) {
   const thumbnail = templatePicture.cloneNode(true);

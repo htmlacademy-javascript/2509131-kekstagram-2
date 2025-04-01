@@ -1,4 +1,4 @@
-import {textHashtags} from './img-upload-form.js';
+const textHashtags = document.querySelector('.text__hashtags');
 
 let errorMessage = '';
 
