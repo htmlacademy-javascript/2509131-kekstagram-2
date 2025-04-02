@@ -1,10 +1,10 @@
 import { isEscapeKey } from './util.js';
-import { validateHashtags, getErrorMessage } from './validate-hashtags.js';
 import { showUploadingDataError } from './errors.js';
 import { sendData } from './api.js';
 import { resetScale } from './scale-controlls.js';
 import { resetFilter } from './effects-slider.js';
 import { showSuccessMessage } from './success-message.js';
+import { pristine } from './pristine.js';
 
 const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
@@ -15,7 +15,6 @@ const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cance
 const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const submitButton = imgUploadSection.querySelector('.img-upload__submit');
-const MAX_TEXT_DESCRIPTION_LENGTH = 140;
 
 function resetFormFields () {
   imgUploadInput.value = '';
@@ -57,17 +56,6 @@ function closeUploadForm () {
   resetFilter();
 }
 
-const pristine = new Pristine(imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
-  errorTextClass: 'img-upload__field-wrapper--error'
-});
-
-function validateTextDescription () {
-  return textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
-}
-
 function blockSubmitButton () {
   submitButton.disabled = true;
 }
@@ -100,7 +88,4 @@ setImgUploadFormSubmit(closeUploadForm);
 
 imgUploadInput.addEventListener('change', onImgUploadInputChange);
 
-pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
-
-pristine.addValidator(textDescription, validateTextDescription, `длина комментария не может быть больше ${MAX_TEXT_DESCRIPTION_LENGTH} символов`);
 
