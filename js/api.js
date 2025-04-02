@@ -3,7 +3,7 @@ import { showLoadingDataError, showUploadingDataError } from './errors';
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const Route = {
   GET_DATA: '/data',
-  SEND_DATA: '/',
+  SEND_DATA: '/2',
 };
 const Method = {
   GET: 'GET',
