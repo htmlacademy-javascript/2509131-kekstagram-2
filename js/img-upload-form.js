@@ -2,7 +2,7 @@ import { isEscapeKey } from './util.js';
 import { showUploadingDataError } from './errors.js';
 import { sendData } from './api.js';
 import { initScale, resetScale } from './scale-controlls.js';
-import { resetFilter } from './effects-slider.js';
+import { resetEffect, initEffect } from './effects-slider.js';
 import { showSuccessMessage } from './success-message.js';
 import { pristine } from './pristine.js';
 
@@ -32,10 +32,6 @@ function onDocumentEscKeydown (evt) {
   closeUploadForm();
 }
 
-function onimgUploadCancelButtonClick () {
-  closeUploadForm();
-}
-
 function onImgUploadInputChange () {
   const file = imgUploadInput.files[0];
   const fileName = file.name.toLowerCase();
@@ -43,21 +39,24 @@ function onImgUploadInputChange () {
   if (matches) {
     imgUploadPreview.src = URL.createObjectURL(file);
   }
+  openUploadForm();
+}
+
+function openUploadForm () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  imgUploadCancelButton.addEventListener('click', onimgUploadCancelButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
-  initScale();
+  imgUploadCancelButton.addEventListener('click', closeUploadForm);
 }
 
 function closeUploadForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  imgUploadCancelButton.removeEventListener('click', onimgUploadCancelButtonClick);
+  imgUploadCancelButton.removeEventListener('click', closeUploadForm);
   document.removeEventListener('keydown', onDocumentEscKeydown);
   imgUploadForm.reset();
   resetScale();
-  resetFilter();
+  resetEffect();
   pristine.reset();
 }
 
@@ -89,8 +88,10 @@ const setImgUploadFormSubmit = (onSuccess) => {
   });
 };
 
-setImgUploadFormSubmit(closeUploadForm);
-
-imgUploadInput.addEventListener('change', onImgUploadInputChange);
-
+export function initImgUploadForm () {
+  imgUploadInput.addEventListener('change', onImgUploadInputChange);
+  setImgUploadFormSubmit(closeUploadForm);
+  initScale();
+  initEffect();
+}
 

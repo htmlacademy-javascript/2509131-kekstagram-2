@@ -33,6 +33,11 @@ function getFilteredPhotos (filterType) {
   }
 }
 
+const debouncedApplyFilter = debounce((filterType) => {
+  const filteredPhotos = getFilteredPhotos(filterType);
+  renderPhotoCards(filteredPhotos);
+}, RERENDER_DELAY);
+
 function onImgFiltersClick (evt) {
   const clickedButton = evt.target.closest('.img-filters__button');
 
@@ -40,16 +45,15 @@ function onImgFiltersClick (evt) {
     return;
   }
 
-  const filteredPhotos = getFilteredPhotos(clickedButton.id);
   currentFilter = clickedButton.id;
   document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
   clickedButton.classList.add('img-filters__button--active');
 
-  renderPhotoCards(filteredPhotos);
+  debouncedApplyFilter(clickedButton.id);
 }
 
 export function initFilters (photos) {
   photosData = photos;
-  imgFilters.addEventListener('click', debounce(onImgFiltersClick, RERENDER_DELAY));
+  imgFilters.addEventListener('click', onImgFiltersClick);
   imgFilters.classList.remove('img-filters--inactive');
 }

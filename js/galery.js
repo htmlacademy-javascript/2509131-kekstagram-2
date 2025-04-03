@@ -3,19 +3,26 @@ import { fillPictures, openBigPicture } from './big-picture.js';
 import { showLoadingDataError } from './errors.js';
 import { getData } from './api.js';
 import { initFilters } from './filter-buttons.js';
+import { initImgUploadForm } from './img-upload-form.js';
 
 const picturesContainer = document.querySelector('.pictures');
 
-getData()
-  .then((photos) => {
-    fillPictures(photos);
-    renderPhotoCards(photos);
-    initFilters(photos);
-  }
-  )
-  .catch(() => {
-    showLoadingDataError();
-  });
+function initApp () {
+  getData()
+    .then((photos) => {
+      fillPictures(photos);
+      renderPhotoCards(photos);
+      initFilters(photos);
+    }
+    )
+    .catch(() => {
+      showLoadingDataError();
+    });
+
+  initImgUploadForm();
+}
+
+initApp();
 
 
 picturesContainer.addEventListener ('click', (evt) => {
