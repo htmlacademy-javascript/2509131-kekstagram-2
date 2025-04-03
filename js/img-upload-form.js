@@ -19,12 +19,6 @@ const submitButton = imgUploadSection.querySelector('.img-upload__submit');
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-function resetFormFields () {
-  imgUploadInput.value = '';
-  textDescription.value = '';
-  textHashtags.value = '';
-}
-
 function onDocumentEscKeydown (evt) {
   if(!isEscapeKey(evt)) {
     return;
@@ -61,7 +55,7 @@ function closeUploadForm () {
   body.classList.remove('modal-open');
   imgUploadCancelButton.removeEventListener('click', onimgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  resetFormFields();
+  imgUploadForm.reset();
   resetScale();
   resetFilter();
   pristine.reset();
