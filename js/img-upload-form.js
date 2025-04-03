@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { showUploadingDataError } from './errors.js';
 import { sendData } from './api.js';
-import { resetScale } from './scale-controlls.js';
+import { initScale, resetScale } from './scale-controlls.js';
 import { resetFilter } from './effects-slider.js';
 import { showSuccessMessage } from './success-message.js';
 import { pristine } from './pristine.js';
@@ -53,6 +53,7 @@ function onImgUploadInputChange () {
   body.classList.add('modal-open');
   imgUploadCancelButton.addEventListener('click', onimgUploadCancelButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
+  initScale();
 }
 
 function closeUploadForm () {
