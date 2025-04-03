@@ -63,6 +63,7 @@ function closeUploadForm () {
   resetFormFields();
   resetScale();
   resetFilter();
+  pristine.reset();
 }
 
 function blockSubmitButton () {

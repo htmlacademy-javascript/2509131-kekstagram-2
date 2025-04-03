@@ -69,3 +69,8 @@ function validateHashtags () {
 pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
 
 pristine.addValidator(textDescription, validateTextDescription, `длина комментария не может быть больше ${MAX_TEXT_DESCRIPTION_LENGTH} символов`);
+
+
+export function resetFormValidators () {
+  pristine.reset();
+}
