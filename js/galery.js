@@ -20,17 +20,20 @@ function initApp () {
     });
 
   initImgUploadForm();
+  initGalery();
 }
 
 initApp();
 
+function initGalery () {
+  picturesContainer.addEventListener ('click', (evt) => {
+    const currentPicture = evt.target.closest('.picture');
 
-picturesContainer.addEventListener ('click', (evt) => {
-  const currentPicture = evt.target.closest('.picture');
+    if (currentPicture) {
+      evt.preventDefault();
+      openBigPicture(currentPicture.dataset.pictureId);
+    }
+  });
+}
 
-  if (currentPicture) {
-    evt.preventDefault();
-    openBigPicture(currentPicture.dataset.pictureId);
-  }
-});
 
