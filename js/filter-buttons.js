@@ -5,14 +5,15 @@ import { debounce } from './util.js';
 const imgFilters = document.querySelector('.img-filters');
 const RANDOM_PHOTOS_NUMBER = 10;
 const RERENDER_DELAY = 500;
-let currentFilter = 'filter-default';
 let photosData = [];
 
 const FILTERS = {
-  DEFAULT: 'filter-default',
-  RANDOM: 'filter-random',
-  DISCUSSED: 'filter-discussed'
+  default: 'filter-default',
+  random: 'filter-random',
+  discussed: 'filter-discussed'
 };
+
+let currentFilter = FILTERS.default;
 
 const compareCommentsNumbers = (photoA, photoB) => {
   const photoAComments = photoA.comments.length;
@@ -22,11 +23,11 @@ const compareCommentsNumbers = (photoA, photoB) => {
 
 function getFilteredPhotos (filterType) {
   switch (filterType) {
-    case FILTERS.RANDOM:
+    case FILTERS.random:
       return getRandomUniquePhotos(photosData, RANDOM_PHOTOS_NUMBER);
-    case FILTERS.DISCUSSED:
+    case FILTERS.discussed:
       return photosData.slice().sort(compareCommentsNumbers);
-    case FILTERS.DEFAULT:
+    case FILTERS.default:
     default:
       return photosData;
   }
