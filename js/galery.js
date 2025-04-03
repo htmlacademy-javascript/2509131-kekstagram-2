@@ -2,7 +2,7 @@ import { renderPhotoCards } from './thumbnails.js';
 import { fillPictures, openBigPicture } from './big-picture.js';
 import { showLoadingDataError } from './errors.js';
 import { getData } from './api.js';
-import { activateFilterButtons, initFilters } from './filter-buttons.js';
+import { initFilters } from './filter-buttons.js';
 
 const picturesContainer = document.querySelector('.pictures');
 
@@ -13,7 +13,6 @@ getData()
     initFilters(photos);
   }
   )
-  .then(activateFilterButtons())
   .catch(() => {
     showLoadingDataError();
   });

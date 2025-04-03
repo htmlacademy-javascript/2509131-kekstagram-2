@@ -50,7 +50,8 @@ function onImgFiltersClick (evt) {
 export function initFilters (photos) {
   photosData = photos;
   imgFilters.addEventListener('click', debounce(onImgFiltersClick, RERENDER_DELAY));
+  imgFilters.classList.remove('img-filters--inactive');
 }
 
-export const activateFilterButtons = () => imgFilters.classList.remove('img-filters--inactive');
+// export const activateFilterButtons = () => imgFilters.classList.remove('img-filters--inactive');
 
