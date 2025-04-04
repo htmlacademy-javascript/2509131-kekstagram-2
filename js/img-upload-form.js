@@ -16,6 +16,7 @@ const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cance
 const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const submitButton = imgUploadSection.querySelector('.img-upload__submit');
+const effectsPreview = imgUploadSection.querySelectorAll('.effects__preview');
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -37,7 +38,11 @@ function onImgUploadInputChange () {
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
-    imgUploadPreview.src = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file);
+    imgUploadPreview.src = url;
+    effectsPreview.forEach((effectPreview) => {
+      effectPreview.style.backgroundImage = `url(${url})`;
+    });
   }
   openUploadForm();
 }
@@ -68,29 +73,26 @@ function unblockSubmitButton () {
   submitButton.disabled = false;
 }
 
-const setImgUploadFormSubmit = (onSuccess) => {
-  imgUploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    if(!pristine.validate()) {
-      return;
-    }
-    textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
+const onImgUploadFormSubmit = (onSuccess) => (evt) => {
+  evt.preventDefault();
+  if(!pristine.validate()) {
+    return;
+  }
+  textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
 
-    blockSubmitButton();
+  blockSubmitButton();
 
-    sendData(new FormData(evt.target))
-      .then(onSuccess)
-      .then(showSuccessMessage)
-      .catch(() => {
-        showUploadingDataError();
-      })
-      .finally(unblockSubmitButton);
-  });
+  sendData(new FormData(evt.target))
+    .then(onSuccess)
+    .then(showSuccessMessage)
+    .catch(() => showUploadingDataError)
+    .finally(unblockSubmitButton);
+
 };
 
 export function initImgUploadForm () {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
-  setImgUploadFormSubmit(closeUploadForm);
+  imgUploadForm.addEventListener('submit', onImgUploadFormSubmit(closeUploadForm));
   initScale();
   initEffect();
 }

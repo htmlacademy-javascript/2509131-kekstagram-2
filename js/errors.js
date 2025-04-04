@@ -16,7 +16,6 @@ export const showLoadingDataError = () => {
 export const showUploadingDataError = () => {
   const uploadingErrorMessage = uploadingErrorTemplate.cloneNode(true);
   const errorButton = uploadingErrorMessage.querySelector('.error__button');
-  const errorInner = uploadingErrorMessage.querySelector('.error__inner');
 
   body.append(uploadingErrorMessage);
 
@@ -30,18 +29,31 @@ export const showUploadingDataError = () => {
   }
 
   function onBodyClick (evt) {
-    if(!errorInner.contains(evt.target)) {
+    if (!document.contains(uploadingErrorMessage)) {
+      return;
+    }
+    if(!evt.target.closest('.error__inner')) {
       closeErrorMessage();
     }
   }
 
+  function onErrorButtonClick (evt) {
+    evt.stopPropagation();
+    closeErrorMessage();
+  }
+
   function closeErrorMessage () {
+    if (!document.contains(uploadingErrorMessage)) {
+      return;
+    }
     uploadingErrorMessage.remove();
     body.removeEventListener('keydown', onBodyEscKeydown);
     body.removeEventListener('click', onBodyClick);
+    errorButton.removeEventListener('click', onErrorButtonClick);
   }
 
-  errorButton.addEventListener('click', closeErrorMessage);
+  errorButton.addEventListener('click', onErrorButtonClick);
   body.addEventListener('keydown', onBodyEscKeydown);
   body.addEventListener('click', onBodyClick);
 };
+
