@@ -57,34 +57,27 @@ const EFFECT_SETTINGS = {
   },
 };
 
-noUiSlider.create(effectSlider, {
-  range: {
-    min: 0,
-    max: 1,
-  },
-  start: 1,
-  step: 0.1,
-  connect: 'lower',
-  format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
+function createSlider () {
+  noUiSlider.create(effectSlider, {
+    range: {
+      min: 0,
+      max: 1,
     },
-    from: function (value) {
-      return parseFloat(value);
+    start: 1,
+    step: 0.1,
+    connect: 'lower',
+    format: {
+      to: function (value) {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
     },
-  },
-});
-
-sliderContainer.classList.add('hidden');
-
-export function resetFilter () {
-  sliderContainer.classList.add('hidden');
-  imgUploadPreview.style.filter = 'none';
-  effectLevel.value = 0;
-  originalFilter.checked = true;
+  });
 }
 
 function onEffectsListChange (evt) {
@@ -92,7 +85,7 @@ function onEffectsListChange (evt) {
   const filterSettings = EFFECT_SETTINGS[effect];
 
   if(effect === 'none') {
-    resetFilter();
+    resetEffect();
   } else {
     sliderContainer.classList.remove('hidden');
 
@@ -109,4 +102,15 @@ function onEffectsListChange (evt) {
   }
 }
 
-effectsList.addEventListener('change', onEffectsListChange);
+export function initEffect () {
+  effectsList.addEventListener('change', onEffectsListChange);
+  sliderContainer.classList.add('hidden');
+  createSlider();
+}
+
+export function resetEffect () {
+  sliderContainer.classList.add('hidden');
+  imgUploadPreview.style.filter = 'none';
+  effectLevel.value = 0;
+  originalFilter.checked = true;
+}

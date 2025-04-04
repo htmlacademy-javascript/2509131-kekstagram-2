@@ -1,33 +1,26 @@
-export function getRandomInteger (min, max) {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-}
-
-export function getNumberInOrder () {
-  let lastGeneratedId = 0;
-
-  return function () {
-    lastGeneratedId += 1;
-    return lastGeneratedId;
-  };
-}
-
-export function getRandomUniqIntegerNumber () {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = Math.floor(Math.random() * 1000);
-    while (previousValues.includes(currentValue)) {
-      currentValue = Math.floor(Math.random() * 1000);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-}
-
-export const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export function getRandomUniquePhotos(photos, count) {
+  if (!Array.isArray(photos)) {
+    throw new Error('Input must be an array');
+  }
+
+  const availablePhotos = [...photos];
+  const result = [];
+
+  while (result.length < count && availablePhotos.length > 0) {
+    const randomIndex = Math.floor(Math.random() * availablePhotos.length);
+    result.push(availablePhotos.splice(randomIndex, 1)[0]);
+  }
+
+  return result;
+}
+
+export const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};

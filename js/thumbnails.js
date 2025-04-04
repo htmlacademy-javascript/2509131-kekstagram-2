@@ -18,13 +18,19 @@ function fillPictureTemplate (picture) {
 }
 
 function fillDocumentFragment (photos) {
-  photos.forEach((photo) => {
+  photos.slice().forEach((photo) => {
     documentFragment.append(fillPictureTemplate(photo));
   });
 
   return documentFragment;
 }
 
+const clearPhotoCards = () => {
+  const pictures = picturesContainer.querySelectorAll('.picture');
+  pictures.forEach((picture) => picture.remove());
+};
+
 export function renderPhotoCards (photosArray) {
+  clearPhotoCards();
   picturesContainer.append(fillDocumentFragment(photosArray));
 }

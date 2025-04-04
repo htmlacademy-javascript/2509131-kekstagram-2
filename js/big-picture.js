@@ -27,7 +27,6 @@ export function openBigPicture (pictureId) {
   );
 
   if (!currentPhoto) {
-    alert.error(`Photo with id ${pictureId} not found.`);
     return;
   }
 

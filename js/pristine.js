@@ -1,10 +1,23 @@
 const textHashtags = document.querySelector('.text__hashtags');
-
+const textDescription = document.querySelector('.text__description');
+const imgUploadForm = document.querySelector('.img-upload__form');
+const MAX_TEXT_DESCRIPTION_LENGTH = 140;
 let errorMessage = '';
 
-export const getErrorMessage = () => errorMessage;
+export const pristine = new Pristine(imgUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__field-wrapper--error'
+});
 
-export function validateHashtags () {
+function validateTextDescription () {
+  return textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
+}
+
+const getErrorMessage = () => errorMessage;
+
+function validateHashtags () {
   errorMessage = '';
   const hashtags = textHashtags.value.toLowerCase().trim().split(/\s+/);
   const MAX_SYMBOLS = 20;
@@ -52,3 +65,7 @@ export function validateHashtags () {
     return !isInvalid;
   });
 }
+
+pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
+
+pristine.addValidator(textDescription, validateTextDescription, `длина комментария не может быть больше ${MAX_TEXT_DESCRIPTION_LENGTH} символов`);
