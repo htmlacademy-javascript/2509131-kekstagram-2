@@ -2,12 +2,10 @@ import { isEscapeKey } from './util.js';
 
 const successSection = document.querySelector('#success').content;
 const successTemplate = successSection.querySelector('.success');
-const successButton = successSection.querySelector('.success__button');
-const successInner = successSection.querySelector('.success__inner');
-
 
 export function showSuccessMessage () {
   const successMessage = successTemplate.cloneNode(true);
+  const successButton = successMessage.querySelector('.success__button');
   document.body.append(successMessage);
   successButton.addEventListener('click', onSuccessButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
@@ -30,10 +28,8 @@ export function showSuccessMessage () {
   }
 
   function onDocumentClick (evt) {
-    if(evt.target === successInner) {
-      return;
+    if(!evt.target.closest('.success__inner')) {
+      removeSuccessMessage();
     }
-    removeSuccessMessage();
   }
-
 }

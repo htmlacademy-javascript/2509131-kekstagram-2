@@ -2,36 +2,23 @@ import { isEscapeKey } from './util.js';
 
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 const uploadingErrorTemplate = document.querySelector('#error').content.querySelector('.error');
-const errorButton = uploadingErrorTemplate.querySelector('.error__button');
 const body = document.querySelector('body');
 const REMOVE_ERROR_MESSAGE_TIME = 5000;
 
 export const showLoadingDataError = () => {
   const dataErrorMessage = dataErrorTemplate.cloneNode(true);
-  document.body.append(dataErrorMessage);
+  body.append(dataErrorMessage);
   setTimeout(() => {
     dataErrorMessage.remove();
   }, REMOVE_ERROR_MESSAGE_TIME);
 };
 
-
 export const showUploadingDataError = () => {
   const uploadingErrorMessage = uploadingErrorTemplate.cloneNode(true);
-  document.body.append(uploadingErrorMessage);
-  errorButton.addEventListener('click', onErrorButtonClick);
-  body.addEventListener('keydown', onBodyEscKeydown);
-  body.addEventListener('click', onBodyClick);
+  const errorButton = uploadingErrorMessage.querySelector('.error__button');
+  const errorInner = uploadingErrorMessage.querySelector('.error__inner');
 
-  function removeUploadingErrorMessage () {
-    uploadingErrorMessage.remove();
-    errorButton.removeEventListener('click', onErrorButtonClick);
-    body.removeEventListener('keydown', onBodyEscKeydown);
-    body.removeEventListener('click', onBodyClick);
-  }
-
-  function onErrorButtonClick () {
-    removeUploadingErrorMessage();
-  }
+  body.append(uploadingErrorMessage);
 
   function onBodyEscKeydown (evt) {
     if(!isEscapeKey(evt)) {
@@ -39,12 +26,22 @@ export const showUploadingDataError = () => {
     }
     evt.preventDefault();
     evt.stopPropagation();
-    removeUploadingErrorMessage();
+    closeErrorMessage();
   }
 
   function onBodyClick (evt) {
-    if(!evt.target.closest('.error__inner')) {
-      removeUploadingErrorMessage();
+    if(!errorInner.contains(evt.target)) {
+      closeErrorMessage();
     }
   }
+
+  function closeErrorMessage () {
+    uploadingErrorMessage.remove();
+    body.removeEventListener('keydown', onBodyEscKeydown);
+    body.removeEventListener('click', onBodyClick);
+  }
+
+  errorButton.addEventListener('click', closeErrorMessage);
+  body.addEventListener('keydown', onBodyEscKeydown);
+  body.addEventListener('click', onBodyClick);
 };
