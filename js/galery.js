@@ -29,7 +29,7 @@ function initGalery () {
   picturesContainer.addEventListener ('click', (evt) => {
     const currentPicture = evt.target.closest('.picture');
 
-    if (currentPicture) {
+    if(currentPicture) {
       evt.preventDefault();
       openBigPicture(currentPicture.dataset.pictureId);
     }

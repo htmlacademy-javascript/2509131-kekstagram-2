@@ -2,7 +2,7 @@
 export const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export function getRandomUniquePhotos(photos, count) {
-  if (!Array.isArray(photos)) {
+  if(!Array.isArray(photos)) {
     throw new Error('Input must be an array');
   }
 

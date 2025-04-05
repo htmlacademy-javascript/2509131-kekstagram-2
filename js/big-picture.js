@@ -25,22 +25,17 @@ export function openBigPicture (pictureId) {
   const currentPhoto = pictures.find((photo) =>
     photo.id === Number(pictureId)
   );
-
-  if (!currentPhoto) {
+  if(!currentPhoto) {
     return;
   }
-
   bigPictureImg.src = currentPhoto.url;
   likesCount.textContent = currentPhoto.likes;
   socialCaption.textContent = currentPhoto.description;
   socialCommentTotalCount.textContent = currentPhoto.comments.length;
-
   clearComments();
   addComments(currentPhoto.comments);
-
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-
   document.addEventListener('keydown', onDocumentEscKeydown);
   closeButton.addEventListener('click', closeBigPicture);
 }
