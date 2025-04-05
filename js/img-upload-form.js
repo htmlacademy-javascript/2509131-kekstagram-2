@@ -37,7 +37,7 @@ function onImgUploadInputChange () {
   const file = imgUploadInput.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if (matches) {
+  if(matches) {
     const url = URL.createObjectURL(file);
     imgUploadPreview.src = url;
     effectsPreview.forEach((effectPreview) => {

@@ -40,7 +40,7 @@ const debouncedApplyFilter = debounce((filterType) => {
 
 function onImgFiltersClick (evt) {
   const clickedButton = evt.target.closest('.img-filters__button');
-  if (!clickedButton || clickedButton.id === currentFilter) {
+  if(!clickedButton || clickedButton.id === currentFilter) {
     return;
   }
   currentFilter = clickedButton.id;

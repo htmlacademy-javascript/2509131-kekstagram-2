@@ -53,7 +53,7 @@ function validateHashtags () {
     },
   ];
 
-  if (textHashtags.value.length === 0) {
+  if(textHashtags.value.length === 0) {
     return true;
   }
 

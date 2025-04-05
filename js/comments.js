@@ -29,7 +29,7 @@ function addMoreComments () {
 
   socialCommentShownCount.textContent = shownCommentsLength;
 
-  if (shownCommentsLength === comments.length) {
+  if(shownCommentsLength === comments.length) {
     commentsLoader.classList.add('hidden');
   }
 
