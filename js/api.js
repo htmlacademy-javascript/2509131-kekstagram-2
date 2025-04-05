@@ -1,6 +1,7 @@
 import { showLoadingDataError, showUploadingDataError } from './errors';
 
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
+
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
@@ -13,7 +14,7 @@ const Method = {
 const load = (route, showError, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
     .then((response) => {
-      if(!response.ok) {
+      if (!response.ok) {
         throw new Error();
       }
       return response.json();

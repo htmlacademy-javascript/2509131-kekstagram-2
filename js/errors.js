@@ -19,28 +19,28 @@ export const showUploadingDataError = () => {
 
   body.append(uploadingErrorMessage);
 
-  function onBodyEscKeydown (evt) {
-    if(!isEscapeKey(evt)) {
+  const onBodyEscKeydown = (evt) => {
+    if (!isEscapeKey(evt)) {
       return;
     }
     evt.preventDefault();
     evt.stopPropagation();
     closeErrorMessage();
-  }
+  };
 
-  function onBodyClick (evt) {
+  const onBodyClick = (evt) => {
     if (!document.contains(uploadingErrorMessage)) {
       return;
     }
-    if(!evt.target.closest('.error__inner')) {
+    if (!evt.target.closest('.error__inner')) {
       closeErrorMessage();
     }
-  }
+  };
 
-  function onErrorButtonClick (evt) {
+  const onErrorButtonClick = (evt) => {
     evt.stopPropagation();
     closeErrorMessage();
-  }
+  };
 
   function closeErrorMessage () {
     if (!document.contains(uploadingErrorMessage)) {

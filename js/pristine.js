@@ -8,16 +8,14 @@ export const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
-  errorTextClass: 'img-upload__field-wrapper--error'
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
 
-function validateTextDescription () {
-  return textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
-}
+const validateTextDescription = () => textDescription.value.length <= MAX_TEXT_DESCRIPTION_LENGTH;
 
 const getErrorMessage = () => errorMessage;
 
-function validateHashtags () {
+const validateHashtags = () => {
   errorMessage = '';
   const hashtags = textHashtags.value.toLowerCase().trim().split(/\s+/);
   const MAX_SYMBOLS = 20;
@@ -53,7 +51,7 @@ function validateHashtags () {
     },
   ];
 
-  if(textHashtags.value.length === 0) {
+  if (textHashtags.value.length === 0) {
     return true;
   }
 
@@ -64,8 +62,10 @@ function validateHashtags () {
     }
     return !isInvalid;
   });
-}
+};
 
-pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
+export const initPristineValidation = () => {
+  pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
+  pristine.addValidator(textDescription, validateTextDescription, `длина комментария не может быть больше ${MAX_TEXT_DESCRIPTION_LENGTH} символов`);
+};
 
-pristine.addValidator(textDescription, validateTextDescription, `длина комментария не может быть больше ${MAX_TEXT_DESCRIPTION_LENGTH} символов`);

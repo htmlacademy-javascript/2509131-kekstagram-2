@@ -57,7 +57,7 @@ const EFFECT_SETTINGS = {
   },
 };
 
-function createSlider () {
+const createSlider = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 0,
@@ -78,13 +78,13 @@ function createSlider () {
       },
     },
   });
-}
+};
 
-function onEffectsListChange (evt) {
+const onEffectsListChange = (evt) => {
   const effect = evt.target.value;
   const filterSettings = EFFECT_SETTINGS[effect];
 
-  if(effect === 'none') {
+  if (effect === 'none') {
     resetEffect();
   } else {
     sliderContainer.classList.remove('hidden');
@@ -100,13 +100,13 @@ function onEffectsListChange (evt) {
       imgUploadPreview.style.filter = filterSettings.filter(effectLevel.value);
     });
   }
-}
+};
 
-export function initEffect () {
+export const initEffect = () => {
   effectsList.addEventListener('change', onEffectsListChange);
   sliderContainer.classList.add('hidden');
   createSlider();
-}
+};
 
 export function resetEffect () {
   sliderContainer.classList.add('hidden');

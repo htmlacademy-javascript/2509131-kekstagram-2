@@ -2,7 +2,7 @@ const templatePicture = document.querySelector('#picture').content.querySelector
 const documentFragment = document.createDocumentFragment();
 const picturesContainer = document.querySelector('.pictures');
 
-function fillPictureTemplate (picture) {
+const fillPictureTemplate = (picture) => {
   const thumbnail = templatePicture.cloneNode(true);
   const thumbnailImg = thumbnail.querySelector('.picture__img');
   const thumbnailComments = thumbnail.querySelector('.picture__comments');
@@ -15,22 +15,22 @@ function fillPictureTemplate (picture) {
   thumbnail.dataset.pictureId = picture.id;
 
   return thumbnail;
-}
+};
 
-function fillDocumentFragment (photos) {
+const fillDocumentFragment = (photos) => {
   photos.slice().forEach((photo) => {
     documentFragment.append(fillPictureTemplate(photo));
   });
 
   return documentFragment;
-}
+};
 
 const clearPhotoCards = () => {
   const pictures = picturesContainer.querySelectorAll('.picture');
   pictures.forEach((picture) => picture.remove());
 };
 
-export function renderPhotoCards (photosArray) {
+export const renderPhotoCards = (photosArray) => {
   clearPhotoCards();
   picturesContainer.append(fillDocumentFragment(photosArray));
-}
+};
