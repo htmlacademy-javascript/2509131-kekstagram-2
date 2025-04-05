@@ -4,7 +4,7 @@ import { sendData } from './api.js';
 import { initScale, resetScale } from './scale-controlls.js';
 import { resetEffect, initEffect } from './effects-slider.js';
 import { showSuccessMessage } from './success-message.js';
-import { pristine } from './pristine.js';
+import { initPristineValidation, pristine } from './pristine.js';
 
 const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
@@ -20,24 +20,24 @@ const effectsPreview = imgUploadSection.querySelectorAll('.effects__preview');
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-function onDocumentEscKeydown (evt) {
-  if(!isEscapeKey(evt)) {
+const onDocumentEscKeydown = (evt) => {
+  if (!isEscapeKey(evt)) {
     return;
   }
   evt.preventDefault();
   const INPUT_FIELDS = [textHashtags, textDescription];
-  if(INPUT_FIELDS.includes(document.activeElement)) {
+  if (INPUT_FIELDS.includes(document.activeElement)) {
     evt.stopPropagation();
     return;
   }
   closeUploadForm();
-}
+};
 
-function onImgUploadInputChange () {
+const onImgUploadInputChange = () => {
   const file = imgUploadInput.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if(matches) {
+  if (matches) {
     const url = URL.createObjectURL(file);
     imgUploadPreview.src = url;
     effectsPreview.forEach((effectPreview) => {
@@ -45,13 +45,14 @@ function onImgUploadInputChange () {
     });
   }
   openUploadForm();
-}
+};
 
 function openUploadForm () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
   imgUploadCancelButton.addEventListener('click', closeUploadForm);
+  initPristineValidation();
 }
 
 function closeUploadForm () {
@@ -65,17 +66,17 @@ function closeUploadForm () {
   pristine.reset();
 }
 
-function blockSubmitButton () {
+const blockSubmitButton = () => {
   submitButton.disabled = true;
-}
+};
 
-function unblockSubmitButton () {
+const unblockSubmitButton = () => {
   submitButton.disabled = false;
-}
+};
 
 const onImgUploadFormSubmit = (onSuccess) => (evt) => {
   evt.preventDefault();
-  if(!pristine.validate()) {
+  if (!pristine.validate()) {
     return;
   }
   textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
@@ -90,10 +91,10 @@ const onImgUploadFormSubmit = (onSuccess) => (evt) => {
 
 };
 
-export function initImgUploadForm () {
+export const initImgUploadForm = () => {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
   imgUploadForm.addEventListener('submit', onImgUploadFormSubmit(closeUploadForm));
   initScale();
   initEffect();
-}
+};
 

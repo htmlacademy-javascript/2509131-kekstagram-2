@@ -7,37 +7,37 @@ const SCALE_STEP = 25;
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
 
-function changeScale (value) {
+const changeScale = (value) => {
   scaleControlValue.value = `${value}%`;
   imgUploadPreview.style.transform = `scale(${ value / 100})`;
-}
+};
 
-function onScaleControlSmallerClick () {
+const onScaleControlSmallerClick = () => {
   const scaleControlValueNumber = parseFloat(scaleControlValue.value);
-  if(scaleControlValueNumber === MIN_SCALE) {
+  if (scaleControlValueNumber === MIN_SCALE) {
     return;
   }
   const scaleSize = scaleControlValueNumber - SCALE_STEP;
   changeScale(scaleSize);
-}
+};
 
-function onScaleControllBiggerClick () {
+const onScaleControllBiggerClick = () => {
   const scaleControlValueNumber = parseFloat(scaleControlValue.value);
-  if(scaleControlValueNumber === MAX_SCALE) {
+  if (scaleControlValueNumber === MAX_SCALE) {
     return;
   }
   const scaleSize = scaleControlValueNumber + SCALE_STEP;
   changeScale(scaleSize);
-}
+};
 
-export function initScale () {
+export const initScale = () => {
   scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
   scaleControlBigger.addEventListener('click', onScaleControllBiggerClick);
-}
+};
 
-export function resetScale () {
+export const resetScale = () => {
   scaleControlValue.value = '100%';
   imgUploadPreview.style.transform = 'none';
   scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
   scaleControlBigger.removeEventListener('click', onScaleControllBiggerClick);
-}
+};

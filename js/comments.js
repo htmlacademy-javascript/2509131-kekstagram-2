@@ -6,12 +6,12 @@ const COUNT_STEP = 5;
 let comments = [];
 let currentCount = 0;
 
-export function clearComments () {
+export const clearComments = () => {
   currentCount = 0;
   socialComments.innerHTML = '';
   commentsLoader.classList.remove('hidden');
   commentsLoader.removeEventListener('click', addMoreComments);
-}
+};
 
 function addMoreComments () {
   const shownComments = comments.slice(currentCount, currentCount + COUNT_STEP);
@@ -29,15 +29,15 @@ function addMoreComments () {
 
   socialCommentShownCount.textContent = shownCommentsLength;
 
-  if(shownCommentsLength === comments.length) {
+  if (shownCommentsLength === comments.length) {
     commentsLoader.classList.add('hidden');
   }
 
   currentCount += COUNT_STEP;
 }
 
-export function addComments (photoComments) {
+export const addComments = (photoComments) => {
   comments = photoComments;
   addMoreComments();
   commentsLoader.addEventListener('click', addMoreComments);
-}
+};

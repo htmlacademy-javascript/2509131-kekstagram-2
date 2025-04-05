@@ -1,9 +1,8 @@
 import { isEscapeKey } from './util.js';
 
-const successSection = document.querySelector('#success').content;
-const successTemplate = successSection.querySelector('.success');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
 
-export function showSuccessMessage () {
+export const showSuccessMessage = () => {
   const successMessage = successTemplate.cloneNode(true);
   const successButton = successMessage.querySelector('.success__button');
   document.body.append(successMessage);
@@ -19,7 +18,7 @@ export function showSuccessMessage () {
   }
 
   function onDocumentEscKeydown (evt) {
-    if(!isEscapeKey(evt)) {
+    if (!isEscapeKey(evt)) {
       return;
     }
     evt.preventDefault();
@@ -27,8 +26,8 @@ export function showSuccessMessage () {
   }
 
   function onDocumentClick (evt) {
-    if(!evt.target.closest('.success__inner')) {
+    if (!evt.target.closest('.success__inner')) {
       removeSuccessMessage();
     }
   }
-}
+};
