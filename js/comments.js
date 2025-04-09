@@ -1,19 +1,12 @@
+const COUNT_STEP = 5;
 const socialComments = document.querySelector('.social__comments');
 const socialCommentTemplate = socialComments.querySelector('.social__comment');
 const socialCommentShownCount = document.querySelector('.social__comment-shown-count');
 const commentsLoader = document.querySelector('.comments-loader');
-const COUNT_STEP = 5;
 let comments = [];
 let currentCount = 0;
 
-export const clearComments = () => {
-  currentCount = 0;
-  socialComments.innerHTML = '';
-  commentsLoader.classList.remove('hidden');
-  commentsLoader.removeEventListener('click', addMoreComments);
-};
-
-function addMoreComments () {
+const addMoreComments = () => {
   const shownComments = comments.slice(currentCount, currentCount + COUNT_STEP);
   const shownCommentsLength = shownComments.length + currentCount;
 
@@ -34,10 +27,21 @@ function addMoreComments () {
   }
 
   currentCount += COUNT_STEP;
-}
+};
+
+const onCommentsLoaderClick = () => {
+  addMoreComments();
+};
 
 export const addComments = (photoComments) => {
   comments = photoComments;
   addMoreComments();
-  commentsLoader.addEventListener('click', addMoreComments);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
+};
+
+export const clearComments = () => {
+  currentCount = 0;
+  socialComments.innerHTML = '';
+  commentsLoader.classList.remove('hidden');
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 };

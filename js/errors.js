@@ -1,9 +1,9 @@
 import { isEscapeKey } from './util.js';
 
+const REMOVE_ERROR_MESSAGE_TIME = 5000;
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 const uploadingErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 const body = document.querySelector('body');
-const REMOVE_ERROR_MESSAGE_TIME = 5000;
 
 export const showLoadingDataError = () => {
   const dataErrorMessage = dataErrorTemplate.cloneNode(true);
