@@ -21,6 +21,10 @@ const onDocumentEscKeydown = (evt) => {
   }
 };
 
+const onCloseButtonClick = () => {
+  closeBigPicture();
+};
+
 export const openBigPicture = (pictureId) => {
   const currentPhoto = pictures.find((photo) =>
     photo.id === Number(pictureId)
@@ -37,14 +41,14 @@ export const openBigPicture = (pictureId) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
-  closeButton.addEventListener('click', closeBigPicture);
+  closeButton.addEventListener('click', onCloseButtonClick);
 };
 
 function closeBigPicture () {
   bigPicture.classList.add('hidden');
   clearComments();
   document.removeEventListener('keydown', onDocumentEscKeydown);
-  closeButton.removeEventListener('click', closeBigPicture);
+  closeButton.removeEventListener('click', onCloseButtonClick);
   body.classList.remove('modal-open');
 }
 

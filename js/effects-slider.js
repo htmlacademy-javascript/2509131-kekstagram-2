@@ -1,11 +1,3 @@
-const imgUploadSection = document.querySelector('.img-upload');
-const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
-const effectSlider = imgUploadSection.querySelector('.effect-level__slider');
-const effectLevel = imgUploadSection.querySelector('.effect-level__value');
-const effectsList = imgUploadSection.querySelector('.effects__list');
-const sliderContainer = imgUploadSection.querySelector('.img-upload__effect-level');
-const originalFilter = imgUploadSection.querySelector('#effect-none');
-
 const EFFECT_SETTINGS = {
   none: {
     hidden: true,
@@ -56,6 +48,14 @@ const EFFECT_SETTINGS = {
     filter: (value) => `brightness(${value})`,
   },
 };
+
+const imgUploadSection = document.querySelector('.img-upload');
+const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
+const effectSlider = imgUploadSection.querySelector('.effect-level__slider');
+const effectLevel = imgUploadSection.querySelector('.effect-level__value');
+const effectsList = imgUploadSection.querySelector('.effects__list');
+const sliderContainer = imgUploadSection.querySelector('.img-upload__effect-level');
+const originalFilter = imgUploadSection.querySelector('#effect-none');
 
 const createSlider = () => {
   noUiSlider.create(effectSlider, {

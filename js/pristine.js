@@ -1,7 +1,7 @@
+const MAX_TEXT_DESCRIPTION_LENGTH = 140;
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const imgUploadForm = document.querySelector('.img-upload__form');
-const MAX_TEXT_DESCRIPTION_LENGTH = 140;
 let errorMessage = '';
 
 export const pristine = new Pristine(imgUploadForm, {
@@ -16,25 +16,25 @@ const validateTextDescription = () => textDescription.value.length <= MAX_TEXT_D
 const getErrorMessage = () => errorMessage;
 
 const validateHashtags = () => {
-  errorMessage = '';
-  const hashtags = textHashtags.value.toLowerCase().trim().split(/\s+/);
   const MAX_SYMBOLS = 20;
   const MAX_HASHTAGS = 5;
+  const hashtags = textHashtags.value.toLowerCase().trim().split(/\s+/);
+  errorMessage = '';
   const rules = [
     {
-      check: hashtags.some((item) => item === '#'),
+      check: hashtags.some((hashtag) => hashtag === '#'),
       errorMessage: 'Хэштэг не может состоять только из одной решётки'
     },
     {
-      check: hashtags.some((item) => item[0] !== '#'),
+      check: hashtags.some((hashtag) => hashtag[0] !== '#'),
       errorMessage: 'Хэштэг должен начинаться с решётки'
     },
     {
-      check: hashtags.some((item) => item.slice(1).includes('#')),
+      check: hashtags.some((hashtag) => hashtag.slice(1).includes('#')),
       errorMessage: 'Хэштэги должны разделяться пробелами'
     },
     {
-      check: hashtags.some((item) => item.length > MAX_SYMBOLS),
+      check: hashtags.some((hashtag) => hashtag.length > MAX_SYMBOLS),
       errorMessage: `Хэштэг не может быть длинее ${MAX_SYMBOLS} символов, включая решётку`
     },
     {
@@ -42,11 +42,11 @@ const validateHashtags = () => {
       errorMessage: `Хэштэгов не может быть больше ${MAX_HASHTAGS}`
     },
     {
-      check: hashtags.some((item) => !/^#[a-zа-яё0-9]{1,19}$/i.test(item)),
+      check: hashtags.some((hashtag) => !/^#[a-zа-яё0-9]{1,19}$/i.test(hashtag)),
       errorMessage: 'Хэштэг содержит недопустимые символы'
     },
     {
-      check: hashtags.some((item, index, array) => array.includes(item, index + 1)),
+      check: hashtags.some((hashtag, index, hashtagsArray) => hashtagsArray.includes(hashtag, index + 1)),
       errorMessage: 'Хэштэги не могут повторяться'
     },
   ];

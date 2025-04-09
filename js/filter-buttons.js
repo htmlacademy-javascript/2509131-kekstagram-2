@@ -1,17 +1,15 @@
 import { renderPhotoCards } from './thumbnails.js';
 import { getRandomUniquePhotos, debounce } from './util.js';
 
-const imgFilters = document.querySelector('.img-filters');
 const RANDOM_PHOTOS_NUMBER = 10;
 const RERENDER_DELAY = 500;
-let photosData = [];
-
 const FILTERS = {
   default: 'filter-default',
   random: 'filter-random',
   discussed: 'filter-discussed'
 };
-
+const imgFilters = document.querySelector('.img-filters');
+let photosData = [];
 let currentFilter = FILTERS.default;
 
 const compareCommentsNumbers = (photoA, photoB) => {

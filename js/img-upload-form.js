@@ -6,6 +6,7 @@ import { resetEffect, initEffect } from './effects-slider.js';
 import { showSuccessMessage } from './success-message.js';
 import { initPristineValidation, pristine } from './pristine.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
 const imgUploadInput = imgUploadSection.querySelector('.img-upload__input');
@@ -17,8 +18,6 @@ const textHashtags = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const submitButton = imgUploadSection.querySelector('.img-upload__submit');
 const effectsPreview = imgUploadSection.querySelectorAll('.effects__preview');
-
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const onDocumentEscKeydown = (evt) => {
   if (!isEscapeKey(evt)) {
@@ -51,14 +50,20 @@ function openUploadForm () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
-  imgUploadCancelButton.addEventListener('click', closeUploadForm);
+  imgUploadCancelButton.addEventListener('click', onImgUploadCancelButtonClick);
   initPristineValidation();
+  initScale();
+  initEffect();
+}
+
+function onImgUploadCancelButtonClick () {
+  closeUploadForm();
 }
 
 function closeUploadForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  imgUploadCancelButton.removeEventListener('click', closeUploadForm);
+  imgUploadCancelButton.removeEventListener('click', onImgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
   imgUploadForm.reset();
   resetScale();
@@ -88,13 +93,10 @@ const onImgUploadFormSubmit = (onSuccess) => (evt) => {
     .then(showSuccessMessage)
     .catch(() => showUploadingDataError)
     .finally(unblockSubmitButton);
-
 };
 
 export const initImgUploadForm = () => {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
   imgUploadForm.addEventListener('submit', onImgUploadFormSubmit(closeUploadForm));
-  initScale();
-  initEffect();
 };
 

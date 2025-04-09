@@ -6,13 +6,17 @@ export const showSuccessMessage = () => {
   const successMessage = successTemplate.cloneNode(true);
   const successButton = successMessage.querySelector('.success__button');
   document.body.append(successMessage);
-  successButton.addEventListener('click', removeSuccessMessage);
+  successButton.addEventListener('click', onSuccessButtonClick);
   document.addEventListener('keydown', onDocumentEscKeydown);
   document.addEventListener('click', onDocumentClick);
 
+  function onSuccessButtonClick () {
+    removeSuccessMessage();
+  }
+
   function removeSuccessMessage () {
     successMessage.remove();
-    successButton.addEventListener('click', removeSuccessMessage);
+    successButton.removeEventListener('click', onSuccessButtonClick);
     document.removeEventListener('keydown', onDocumentEscKeydown);
     document.removeEventListener('click', onDocumentClick);
   }
