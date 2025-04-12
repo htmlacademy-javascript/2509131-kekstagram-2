@@ -51,7 +51,7 @@ function openUploadForm () {
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
   imgUploadCancelButton.addEventListener('click', onImgUploadCancelButtonClick);
-  initPristineValidation();
+  //initPristineValidation();
   initScale();
   initEffect();
 }
@@ -98,5 +98,6 @@ const onImgUploadFormSubmit = (onSuccess) => (evt) => {
 export const initImgUploadForm = () => {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
   imgUploadForm.addEventListener('submit', onImgUploadFormSubmit(closeUploadForm));
+  initPristineValidation();
 };
 
