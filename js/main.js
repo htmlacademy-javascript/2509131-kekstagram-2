@@ -5,6 +5,7 @@ import { getData } from './api.js';
 import { initFilters } from './filter-buttons.js';
 import { initImgUploadForm } from './img-upload-form.js';
 import { initGalery } from './galery.js';
+import { createSlider } from './effects-slider.js';
 
 const initApp = () => {
   getData()
@@ -20,6 +21,7 @@ const initApp = () => {
 
   initImgUploadForm();
   initGalery();
+  createSlider();
 };
 
 initApp();

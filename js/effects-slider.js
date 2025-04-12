@@ -57,7 +57,7 @@ const effectsList = imgUploadSection.querySelector('.effects__list');
 const sliderContainer = imgUploadSection.querySelector('.img-upload__effect-level');
 const originalFilter = imgUploadSection.querySelector('#effect-none');
 
-const createSlider = () => {
+export const createSlider = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 0,
@@ -105,7 +105,6 @@ const onEffectsListChange = (evt) => {
 export const initEffect = () => {
   effectsList.addEventListener('change', onEffectsListChange);
   sliderContainer.classList.add('hidden');
-  createSlider();
 };
 
 export function resetEffect () {
